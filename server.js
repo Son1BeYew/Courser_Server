@@ -6,8 +6,10 @@ require("dotenv").config();
 const categoryRoutes = require("./routes/categoryRoutes");
 const UserRoutes = require("./routes/UserRoutes");
 const courseRoutes = require("./routes/CourseRoutes");
+const { swaggerUi, swaggerSpec } = require("./config/swagger");
 
 const app = express();
+
 // Middleware
 app.use(bodyParser.json());
 
@@ -15,6 +17,9 @@ app.use(bodyParser.json());
 app.use("/api/categories", categoryRoutes);
 app.use("/api/users", UserRoutes);
 app.use("/api/courses", courseRoutes);
+
+// Swagger Docs
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 connectDB();
 
