@@ -10,7 +10,7 @@ exports.register = async (req, res) => {
     // kiểm tra email tồn tại
     const existUser = await User.findOne({ email });
     if (existUser) {
-      return res.status(400).json({ msg: "❌ Email đã tồn tại" });
+      return res.status(400).json({ msg: " Email đã tồn tại" });
     }
 
     // hash password
@@ -26,7 +26,7 @@ exports.register = async (req, res) => {
     });
 
     await user.save();
-    res.status(201).json({ msg: "✅ Đăng ký thành công", user });
+    res.status(201).json({ msg: " Đăng ký thành công", user });
   } catch (err) {
     res.status(500).json({ msg: err.message });
   }
@@ -38,12 +38,11 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if (!user)
-      return res.status(400).json({ msg: "❌ Sai email hoặc mật khẩu" });
+    if (!user) return res.status(400).json({ msg: "Sai email hoặc mật khẩu" });
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
-      return res.status(400).json({ msg: "❌ Sai email hoặc mật khẩu" });
+      return res.status(400).json({ msg: "Sai email hoặc mật khẩu" });
 
     const token = jwt.sign(
       { id: user._id, role: user.role },
