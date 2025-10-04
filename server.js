@@ -6,6 +6,7 @@ require("dotenv").config();
 const categoryRoutes = require("./routes/categoryRoutes");
 const UserRoutes = require("./routes/UserRoutes");
 const courseRoutes = require("./routes/CourseRoutes");
+const lessonRoutes = require("./routes/LessonRoutes");
 
 const app = express();
 
@@ -16,10 +17,8 @@ app.use(bodyParser.json());
 app.use("/api/categories", categoryRoutes);
 app.use("/api/users", UserRoutes);
 app.use("/api/courses", courseRoutes);
-
+app.use("/api/lessons", lessonRoutes);
 connectDB();
 
 const PORT = 5000;
-app.listen(PORT, () =>
-  console.log(` Server chạy tại http://localhost:${PORT}`)
-);
+app.listen(PORT, () => console.log(`Server chạy tại http://localhost:${PORT}`));

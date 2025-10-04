@@ -1,6 +1,6 @@
 const Lesson = require("../models/Lesson");
 const mongoose = require("mongoose");
-const Course = require("../models/ControllerCourse");
+
 const isValidId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 exports.createLesson = async (req, res) => {
