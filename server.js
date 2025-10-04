@@ -4,18 +4,18 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 require("dotenv").config();
 
-const categoryRoutes = require("./routes/categoryRoutes");
+const categoryRoutes = require("./routes/CategoryRoutes");
 const UserRoutes = require("./routes/UserRoutes");
 const courseRoutes = require("./routes/CourseRoutes");
+
 const sessionRoutes = require("./routes/SessionRoutes");
 const recordingRoutes = require("./routes/RecordingRoutes");
 const apiInfoRoutes = require("./routes/ApiInfoRoutes");
 const auth = require("./middleware/auth");
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require('./config/swagger');
-
 const app = express();
-
+connectDB();
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -32,7 +32,7 @@ app.use("/api/courses", auth, courseRoutes);
 app.use("/api/sessions", auth, sessionRoutes);
 app.use("/api/recordings", auth, recordingRoutes);
 
-connectDB();
+
 
 const PORT = 5000;
 
