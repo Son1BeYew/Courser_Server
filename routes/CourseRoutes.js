@@ -168,6 +168,4 @@ router.get("/category/:id", courseController.getCoursesByCategory);
  *       401:
  *         description: Unauthorized
  */
-router.get("/:courseId/recordings", courseController.getRecordingsForCourse);
-
 module.exports = router;

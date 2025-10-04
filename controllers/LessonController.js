@@ -1,6 +1,6 @@
 const Lesson = require("../models/Lesson");
 const mongoose = require("mongoose");
-
+const Course = require("../models/ControllerCourse");
 const isValidId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 exports.createLesson = async (req, res) => {
@@ -187,11 +187,9 @@ exports.reorderLessons = async (req, res) => {
       .lean();
     if (found.length !== ids.length) {
       await session.abortTransaction();
-      return res
-        .status(400)
-        .json({
-          message: "Có lesson không thuộc course này hoặc không tồn tại",
-        });
+      return res.status(400).json({
+        message: "Có lesson không thuộc course này hoặc không tồn tại",
+      });
     }
 
     // Cập nhật lần lượt

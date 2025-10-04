@@ -94,16 +94,3 @@ exports.deleteCourse = async (req, res) => {
     res.status(500).json({ msg: "Lỗi server", error: err.message });
   }
 };
-
-
-const SessionRecordingService = require('../services/sessionRecordingService');
-
-exports.getRecordingsForCourse = async (req, res) => {
-  try {
-    const recordings = await SessionRecordingService.getRecordingsForCourse(req.params.courseId);
-    res.status(200).json(recordings);
-  } catch (err) {
-    res.status(500).json({ msg: err.message });
-  }
-};
-
