@@ -1,40 +1,42 @@
-const swaggerJsdoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express");
 
-const options = {
-  definition: {
-    openapi: "3.0.0",
+const swaggerJsDoc = require('swagger-jsdoc');
+
+const swaggerOptions = {
+  swaggerDefinition: {
     info: {
-      title: "AppCourser API",
-      version: "1.0.0",
-      description: "Tài liệu API cho AppCourser 🚀",
+      title: 'Courser API',
+      description: 'API for Courser application',
+      contact: {
+        name: 'Amazing Developer'
+      },
+      servers: ['http://localhost:5000']
     },
-    servers: [
+    securityDefinitions: {
+      Bearer: {
+        type: 'apiKey',
+        name: 'Authorization',
+        in: 'header',
+        description: 'Enter your bearer token in the format: Bearer <token>'
+      },
+      XAuthToken: {
+        type: 'apiKey',
+        name: 'x-auth-token',
+        in: 'header',
+        description: 'Enter your token directly (without Bearer prefix)'
+      }
+    },
+    security: [
       {
-        url: "http://localhost:5000/api",
+        Bearer: []
       },
-    ],
-    components: {
-      schemas: {
-        Category: {
-          type: "object",
-          properties: {
-            _id: {
-              type: "string",
-              example: "67012f9c8a7b3d1234abcd56",
-            },
-            name: {
-              type: "string",
-              example: "Công nghệ",
-            },
-          },
-        },
-      },
-    },
+      {
+        XAuthToken: []
+      }
+    ]
   },
-  apis: ["./routes/*.js"],
+  apis: ['./routes/*.js']
 };
 
-const swaggerSpec = swaggerJsdoc(options);
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
-module.exports = { swaggerUi, swaggerSpec };
+module.exports = swaggerDocs;
