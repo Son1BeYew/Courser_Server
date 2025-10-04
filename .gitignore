@@ -1,9 +1,0 @@
-
-.gemini/
-.specify/
-scripts/
-specs/
-tests/
-jest.setup.js
-jest.teardown.js
-node_modules/
