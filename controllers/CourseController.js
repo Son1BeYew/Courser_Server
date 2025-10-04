@@ -1,4 +1,8 @@
 const Course = require("../models/Course");
+const cloudinary = require("../config/cloudinary");
+
+const bufferToDataURI = (buffer, mimetype) =>
+  `data:${mimetype};base64,${buffer.toString("base64")}`;
 
 exports.getCourses = async (req, res) => {
   try {
@@ -58,10 +62,21 @@ exports.createCourse = async (req, res) => {
       return res.status(400).json({ msg: "Vui lòng nhập đầy đủ thông tin" });
     }
 
+    let image;
+    if (req.file) {
+      const dataURI = bufferToDataURI(req.file.buffer, req.file.mimetype);
+      const uploaded = await cloudinary.uploader.upload(dataURI, {
+        folder: "lms/courses/images",
+        resource_type: "image",
+      });
+      image = uploaded.secure_url;
+    }
+
     const newCourse = new Course({
       title,
       price,
       category,
+      image,
     });
 
     await newCourse.save();
