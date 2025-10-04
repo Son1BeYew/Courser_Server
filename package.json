@@ -1,0 +1,54 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest --runInBand",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "jest": {
+    "testMatch": [
+      "**/tests/**/*.js"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/tests/utils.js"
+    ],
+    "globalSetup": "./jest.setup.js",
+    "globalTeardown": "./jest.teardown.js"
+  },
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.36.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "livekit-server-sdk": "^2.14.0",
+    "mongodb": "^6.20.0",
+    "mongoose": "^8.19.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Son1BeYew/Courser_Server.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Son1BeYew/Courser_Server/issues"
+  },
+  "homepage": "https://github.com/Son1BeYew/Courser_Server#readme",
+  "devDependencies": {
+    "jest": "^30.2.0",
+    "supertest": "^7.1.4"
+  }
+}
