@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 exports.register = async (req, res) => {
   try {
     const { fullname, dob, email, phone, password, role } = req.body;
-
+    console.log(req.body);
     // kiểm tra email tồn tại
     const existUser = await User.findOne({ email });
     if (existUser) {
