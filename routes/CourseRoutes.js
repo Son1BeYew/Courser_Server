@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const courseController = require("../controllers/CourseController");
+const { authMiddleware } = require("../controllers/UserController");
 
 /**
  * @swagger
@@ -79,7 +80,7 @@ router.get("/:id", courseController.getCourseById);
  *       401:
  *         description: Unauthorized
  */
-router.post("/", courseController.createCourse);
+router.post("/", authMiddleware(["admin", "giangvien"]), courseController.createCourse);
 
 /**
  * @swagger
@@ -105,7 +106,7 @@ router.post("/", courseController.createCourse);
  *       401:
  *         description: Unauthorized
  */
-router.put("/:id", courseController.updateCourse);
+router.put("/:id", authMiddleware(["admin", "giangvien"]), courseController.updateCourse);
 
 /**
  * @swagger
@@ -126,7 +127,7 @@ router.put("/:id", courseController.updateCourse);
  *       401:
  *         description: Unauthorized
  */
-router.delete("/:id", courseController.deleteCourse);
+router.delete("/:id", authMiddleware(["admin"]), courseController.deleteCourse);
 
 /**
  * @swagger
