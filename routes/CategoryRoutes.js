@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const categoryCtrl = require("../controllers/CategoryController");
+const { authMiddleware } = require("../controllers/UserController");
 
 /**
  * @swagger
@@ -34,6 +35,8 @@ const categoryCtrl = require("../controllers/CategoryController");
  */
 router.get("/", categoryCtrl.getAll);
 
+router.get("/:id", categoryCtrl.getById);
+
 /**
  * @swagger
  * /api/categories:
@@ -54,6 +57,10 @@ router.get("/", categoryCtrl.getAll);
  *       401:
  *         description: Unauthorized
  */
-router.post("/", categoryCtrl.create);
+router.post("/", authMiddleware(["admin"]), categoryCtrl.create);
+
+router.put("/:id", authMiddleware(["admin"]), categoryCtrl.update);
+
+router.delete("/:id", authMiddleware(["admin"]), categoryCtrl.delete);
 
 module.exports = router;

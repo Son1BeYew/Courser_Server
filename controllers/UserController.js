@@ -90,3 +90,59 @@ exports.getProfile = async (req, res) => {
     res.status(500).json({ msg: err.message });
   }
 };
+
+// Admin: Lấy tất cả users
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().select("-password");
+    res.json({ users });
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
+};
+
+// Admin: Lấy user theo ID
+exports.getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select("-password");
+    if (!user) return res.status(404).json({ msg: "Không tìm thấy user" });
+
+    res.json({ user });
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
+};
+
+// Admin: Cập nhật user
+exports.updateUser = async (req, res) => {
+  try {
+    const { fullname, dob, email, phone, role, password } = req.body;
+    const updateData = { fullname, dob, email, phone, role };
+
+    if (password) {
+      updateData.password = await bcrypt.hash(password, 10);
+    }
+
+    const user = await User.findByIdAndUpdate(req.params.id, updateData, {
+      new: true,
+    }).select("-password");
+
+    if (!user) return res.status(404).json({ msg: "Không tìm thấy user" });
+
+    res.json({ msg: "Cập nhật user thành công", user });
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
+};
+
+// Admin: Xóa user
+exports.deleteUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) return res.status(404).json({ msg: "Không tìm thấy user" });
+
+    res.json({ msg: "Xóa user thành công" });
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
+};

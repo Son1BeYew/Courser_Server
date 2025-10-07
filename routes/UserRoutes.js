@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/UserController");
+const { authMiddleware } = require("../controllers/UserController");
 
 /**
  * @swagger
@@ -90,5 +91,15 @@ router.post("/register", userController.register);
  *         description: Success
  */
 router.post("/login", userController.login);
+
+router.get("/profile", authMiddleware(), userController.getProfile);
+
+router.get("/", authMiddleware(["admin"]), userController.getAllUsers);
+
+router.get("/:id", authMiddleware(["admin"]), userController.getUserById);
+
+router.put("/:id", authMiddleware(["admin"]), userController.updateUser);
+
+router.delete("/:id", authMiddleware(["admin"]), userController.deleteUser);
 
 module.exports = router;
