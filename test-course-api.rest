@@ -1,0 +1,85 @@
+### Test Course API - POST & PUT
+### Cài đặt extension: REST Client by Huachao Mao
+
+@baseUrl = http://localhost:5000
+@token = YOUR_TOKEN_HERE
+@categoryId = YOUR_CATEGORY_ID_HERE
+@courseId = YOUR_COURSE_ID_HERE
+
+### 1. Đăng nhập Admin/Giangvien để lấy token
+POST {{baseUrl}}/api/users/login
+Content-Type: application/json
+
+{
+  "email": "admin@test.com",
+  "password": "admin123"
+}
+
+### 2. Tạo Category trước (Admin only)
+POST {{baseUrl}}/api/categories
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Lập trình Web"
+}
+
+### 3. ✅ POST - Thêm khóa học mới (Admin + Giangvien)
+POST {{baseUrl}}/api/courses
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Khóa học React JS từ cơ bản đến nâng cao",
+  "price": 500000,
+  "category": "{{categoryId}}"
+}
+
+### 4. Lấy danh sách tất cả courses
+GET {{baseUrl}}/api/courses
+
+### 5. Lấy course theo ID
+GET {{baseUrl}}/api/courses/{{courseId}}
+
+### 6. ✅ PUT - Sửa khóa học (Admin + Giangvien)
+PUT {{baseUrl}}/api/courses/{{courseId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Khóa học React JS Master Class - Cập nhật 2025",
+  "price": 750000,
+  "rating": 4.8,
+  "students": 150
+}
+
+### 7. Lấy courses theo category
+GET {{baseUrl}}/api/courses/category/{{categoryId}}
+
+### 8. Xóa course (Admin only)
+DELETE {{baseUrl}}/api/courses/{{courseId}}
+Authorization: Bearer {{token}}
+
+### ============================================
+### TEST PERMISSION - Dùng token học sinh
+### ============================================
+
+### Đăng nhập học sinh
+POST {{baseUrl}}/api/users/login
+Content-Type: application/json
+
+{
+  "email": "hocsinh@test.com",
+  "password": "hs123"
+}
+
+### Thử tạo course với token học sinh (Phải lỗi 403)
+POST {{baseUrl}}/api/courses
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Test Course",
+  "price": 100000,
+  "category": "{{categoryId}}"
+}
