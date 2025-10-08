@@ -13,6 +13,7 @@
 |--------|----------|------------|-------------|
 | POST | `/register` | Public | Đăng ký tài khoản mới |
 | POST | `/login` | Public | Đăng nhập |
+| POST | `/google-login` | Public | Đăng nhập bằng Google OAuth |
 | GET | `/profile` | Authenticated | Lấy thông tin profile của user đang đăng nhập |
 | GET | `/` | **admin** | Lấy danh sách tất cả users |
 | GET | `/:id` | **admin** | Lấy thông tin user theo ID |
@@ -75,4 +76,22 @@
 Authorization: Bearer <token>
 ```
 
-Token nhận được sau khi đăng nhập qua `/api/users/login`
+Token nhận được sau khi đăng nhập qua `/api/users/login` hoặc `/api/users/google-login`
+
+### Google Login Request Body
+```json
+{
+  "idToken": "google-id-token-from-client"
+}
+```
+
+### Google Login Response
+```json
+{
+  "token": "jwt-token",
+  "user": {
+    "name": "Tên người dùng",
+    "role": "hocsinh"
+  }
+}
+```

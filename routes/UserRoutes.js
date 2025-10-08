@@ -92,6 +92,27 @@ router.post("/register", userController.register);
  */
 router.post("/login", userController.login);
 
+/**
+ * @swagger
+ * /api/users/google-login:
+ *   post:
+ *     description: Login with Google OAuth
+ *     tags: [Users]
+ *     parameters:
+ *       - name: body
+ *         in: body
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             idToken:
+ *               type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+router.post("/google-login", userController.googleLogin);
+
 router.get("/profile", authMiddleware(), userController.getProfile);
 
 router.get("/", authMiddleware(["admin"]), userController.getAllUsers);
