@@ -4,7 +4,8 @@
   "main": "server.js",
   "scripts": {
     "test": "jest --runInBand",
-    "start": "node server.js"
+    "start": "node server.js",
+    "seed:courses": "node scripts/seedCourses.js"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +30,7 @@
     "dotenv": "^17.2.3",
     "eslint": "^9.36.0",
     "express": "^5.1.0",
+    "google-auth-library": "^10.4.0",
     "jsonwebtoken": "^9.0.2",
     "livekit-server-sdk": "^2.14.0",
     "mongodb": "^6.20.0",

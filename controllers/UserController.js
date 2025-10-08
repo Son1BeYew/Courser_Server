@@ -1,6 +1,9 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { OAuth2Client } = require("google-auth-library");
+
+const client = new OAuth2Client();
 
 // Đăng ký tài khoản
 exports.register = async (req, res) => {
@@ -50,6 +53,55 @@ exports.login = async (req, res) => {
     );
 
     res.json({ msg: "Đăng nhập thành công", token, user });
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
+};
+
+// Đăng nhập bằng Google
+exports.googleLogin = async (req, res) => {
+  try {
+    const { idToken } = req.body;
+
+    if (!idToken) {
+      return res.status(400).json({ msg: "idToken is required" });
+    }
+
+    const ticket = await client.verifyIdToken({
+      idToken,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+    const { email, name } = payload;
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = new User({
+        fullname: name,
+        email,
+        dob: new Date("2000-01-01"),
+        phone: "",
+        password: await bcrypt.hash(Math.random().toString(36), 10),
+        role: "hocsinh",
+      });
+      await user.save();
+    }
+
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    res.json({
+      token,
+      user: {
+        name: user.fullname,
+        role: user.role,
+      },
+    });
   } catch (err) {
     res.status(500).json({ msg: err.message });
   }
