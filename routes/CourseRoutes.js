@@ -41,6 +41,27 @@ router.get("/", courseController.getCourses);
 
 /**
  * @swagger
+ * /api/courses/category/{id}:
+ *   get:
+ *     description: Get courses by category
+ *     tags: [Courses]
+ *     security:
+ *       - Bearer: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       401:
+ *         description: Unauthorized
+ */
+router.get("/category/:id", courseController.getCoursesByCategory);
+
+/**
+ * @swagger
  * /api/courses/{id}:
  *   get:
  *     description: Get a course by ID
@@ -129,44 +150,4 @@ router.put("/:id", authMiddleware(["admin", "giangvien"]), courseController.upda
  */
 router.delete("/:id", authMiddleware(["admin"]), courseController.deleteCourse);
 
-/**
- * @swagger
- * /api/courses/category/{id}:
- *   get:
- *     description: Get courses by category
- *     tags: [Courses]
- *     security:
- *       - Bearer: []
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         type: string
- *     responses:
- *       200:
- *         description: Success
- *       401:
- *         description: Unauthorized
- */
-router.get("/category/:id", courseController.getCoursesByCategory);
-
-/**
- * @swagger
- * /api/courses/{courseId}/recordings:
- *   get:
- *     description: Get all recordings for a course
- *     tags: [Courses]
- *     security:
- *       - Bearer: []
- *     parameters:
- *       - name: courseId
- *         in: path
- *         required: true
- *         type: string
- *     responses:
- *       200:
- *         description: Success
- *       401:
- *         description: Unauthorized
- */
 module.exports = router;

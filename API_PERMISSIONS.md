@@ -38,11 +38,20 @@
 | Method | Endpoint | Permission | Description |
 |--------|----------|------------|-------------|
 | GET | `/` | Public | Lấy danh sách tất cả courses |
-| GET | `/:id` | Public | Lấy course theo ID |
 | GET | `/category/:id` | Public | Lấy courses theo category |
-| POST | `/` | **admin, giangvien** | Tạo course mới |
-| PUT | `/:id` | **admin, giangvien** | Cập nhật course |
+| GET | `/:id` | Public | Lấy course theo ID |
+| POST | `/` | **admin, giangvien** | ✅ Thêm khóa học mới |
+| PUT | `/:id` | **admin, giangvien** | ✅ Sửa khóa học |
 | DELETE | `/:id` | **admin** | Xóa course |
+
+### Request Body - Tạo/Sửa Course
+```json
+{
+  "title": "Tên khóa học",
+  "price": 500000,
+  "category": "category_id"
+}
+```
 
 ---
 
